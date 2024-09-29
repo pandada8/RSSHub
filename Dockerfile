@@ -8,6 +8,7 @@ WORKDIR /app
 ARG USE_CHINA_NPM_REGISTRY=0
 RUN \
     set -ex && \
+    corepack enable pnpm && \
     if [ "$USE_CHINA_NPM_REGISTRY" = 1 ]; then \
         echo 'use npm mirror' && \
         npm config set registry https://registry.npmmirror.com && \
@@ -53,12 +54,12 @@ COPY --from=dep-version-parser /ver/* /minifier/
 ARG USE_CHINA_NPM_REGISTRY=0
 RUN \
     set -ex && \
+    corepack enable pnpm && \
     if [ "$USE_CHINA_NPM_REGISTRY" = 1 ]; then \
         npm config set registry https://registry.npmmirror.com && \
         yarn config set registry https://registry.npmmirror.com && \
         pnpm config set registry https://registry.npmmirror.com ; \
     fi; \
-    corepack enable pnpm && \
     pnpm add @vercel/nft@$(cat .nft_version) fs-extra@$(cat .fs_extra_version) --save-prod
 
 COPY . /app
@@ -128,6 +129,7 @@ ARG PUPPETEER_SKIP_DOWNLOAD=1
 # https://github.com/puppeteer/puppeteer/blob/07391bbf5feaf85c191e1aa8aa78138dce84008d/packages/puppeteer-core/src/node/BrowserFetcher.ts#L128-L131
 RUN \
     set -ex && \
+    sed -E -i 's/(deb|security).debian.org/mirror.dev.in.chaitin.net/g' /etc/apt/sources.list && \
     apt-get update && \
     apt-get install -yq --no-install-recommends \
         dumb-init \
