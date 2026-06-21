@@ -9920,7 +9920,8 @@ export default {
       "/news": {
         "path": "/news",
         "categories": [
-          "programming"
+          "programming",
+          "popular"
         ],
         "example": "/anthropic/news",
         "parameters": {},
@@ -16071,7 +16072,8 @@ export default {
           "hyoban"
         ],
         "categories": [
-          "social-media"
+          "social-media",
+          "popular"
         ],
         "view": 3,
         "example": "/bilibili/ranking/0",
@@ -48289,8 +48291,7 @@ export default {
           "nczitzk"
         ],
         "categories": [
-          "government",
-          "popular"
+          "government"
         ],
         "radar": [
           {
